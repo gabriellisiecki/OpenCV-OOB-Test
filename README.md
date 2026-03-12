@@ -2,11 +2,12 @@
 
 Celem projektu jest przetestowanie najnowszej stabilnej wersji modułu `opencv-python` z repozytorium PyPI (i w przyszłości z repozytorium GitHub), w tym pipeline CI/CD, testy funkcjonalne oraz wydajnościowe.
 
-## Zespół i role (propozycja podziału)
+## Zespół, role i komunikacja
 - **Gabriel Lisiecki (Tech Lead / DevOps):** Architektura testów, wdrożenie GitHub Actions (CI/CD), testy wydajnościowe, Zarządzanie zadaniami dla zepsołu  (Issues), weryfikacja Pull Requestów jako `reviewer`. 
 - **Adrian Markowski (Functional QA):** Projektowanie i implementacja wszystkich testów funkcjonalnych w kodzie Python, formatowanie raportów, weryfikacja Pull Requestów jako `reviewer`.
-
 - **Paweł Nawrocki (QA / Docs):** Projektowanie scenariuszy testów akceptacyjnych na podstawie dokumentacji OpenCV, tworzenie i utrzymanie struktury plików w repozytorium, utrzymanie dokumentacji.
+
+- **Kanał komunikacyjny (Discord)**: `https://discord.gg/qwk5zNNku4`
 
 ## Zasady i Zarządzanie Kodem (Code Review & Branches)
 
