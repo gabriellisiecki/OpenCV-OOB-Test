@@ -73,25 +73,3 @@ Dokładny harmonogram jest dostępny w widoku kalendarzowym w GitHub Projects.
 ### Testy wydajnościowe (2 sztuki)
 1. **Pomiar czasu procesowania dużych macierzy (4K/8K):** Zmierzenie czasu wykonania kosztownej operacji (np. detekcja krawędzi Canny lub wielokrotne nakładanie rozmycia) na sztucznie wygenerowanej lub wczytanej macierzy o bardzo dużej rozdzielczości. Wynik zostanie zapisany do logów w celu późniejszego porównania.
 2. **Benchmark operacji wejścia/wyjścia (I/O Throughput):** Wczytanie i natychmiastowe zapisanie dużego zbioru plików (np. sekwencji 100 obrazów Full HD) do formatów bezstratnych, takich jak `.png` lub `.tiff`. Zmierzony zostanie łączny narzut czasowy operacji dyskowych w OpenCV w porównaniu do pojedynczego pliku.
-
----
-
-## 📌 TODO: Zadania startowe Gabriela
-
-
-- [x] Opracowanie wstępnych pomysłów na obszary funkcjonalne do testów dla OpenCV.
-- [x] Dopisanie podziału poszczególnych "Stanowisk" do README dla każdego członka.
-- [x] Konfiguracja Środowiska Github Issues, utowrzenie projektu.
-- [x] Dodanie reguł "Code Review" i ochrony gałęzi `main` w ustawieniach na serwerze GitHub po założeniu wspólnego repozytorium.
-
-## 📌 TODO: Zadania startowe Adriana
-
-- [x] Dodanie poszczególnych tasków rozpisanych w README do projektu w GitHub Issues.
-- [x] Rozplanowanie założonych zgłoszeń (Issues) na przestrzeni czasu w widoku GitHub Projects, ustalając przewidywane terminy i daty końcowe.
-- [x] Przypisanie w `README.md` używanego kanału komunikacyjnej grupy (stworzenie kanału w Discord)
-
-## 📌 TODO: Zadania startowe Pawła
-
-- [x] Wygenerowanie i wypchnięcie do repozytorium początkowej struktury katalogów (zgodnie z rozpiską z sekcji *"Struktura katalogów projektu"*).
-- [X] Uzupełnienie ram czasowych w `README.md` w sekcji *"Harmonogram"*.
-- [x] Zainicjowanie projektu, dodanie do requirements.txt wymaganych zależności.
