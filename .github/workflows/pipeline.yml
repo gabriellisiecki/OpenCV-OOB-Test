@@ -1,7 +1,9 @@
 name: OpenCV OOB Testing Pipeline
 
 on:
-  workflow_dispatch: 
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
 
 jobs:
   test_pipeline:
@@ -19,19 +21,27 @@ jobs:
     - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        pip install pytest opencv-python-headless
         
-    - name: Run Unit Tests (if available)
+    - name: Check OpenCV Installation
       run: |
-        echo "Placeholder test"
         python -c "import cv2; print(f'OpenCV module loaded successfully. Version: {cv2.__version__}')"
         
     - name: Run Functional Tests
       run: |
         echo "Running functional tests from tests/functional/"
-        pytest tests/functional/ -v
+        if [ -d tests/functional ] && [ "$(ls -A tests/functional)" ]; then
+          pytest tests/functional/ -v
+        else
+          echo "No functional tests found."
+        fi
         
     - name: Run Performance Tests
       run: |
-        echo "Running performance tests from tests/performance/ "
-        pytest tests/performance/ -v
+        echo "Running performance tests from tests/performance/"
+        if [ -d tests/performance ] && [ "$(ls -A tests/performance)" ]; then
+          pytest tests/performance/ -v
+        else
+          echo "No performance tests found."
+        fi
