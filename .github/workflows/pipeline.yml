@@ -1,0 +1,37 @@
+name: OpenCV OOB Testing Pipeline
+
+on:
+  workflow_dispatch: 
+
+jobs:
+  test_pipeline:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+        
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        
+    - name: Run Unit Tests (if available)
+      run: |
+        echo "Placeholder test"
+        python -c "import cv2; print(f'OpenCV module loaded successfully. Version: {cv2.__version__}')"
+        
+    - name: Run Functional Tests
+      run: |
+        echo "Running functional tests from tests/functional/"
+        pytest tests/functional/ -v
+        
+    - name: Run Performance Tests
+      run: |
+        echo "Running performance tests from tests/performance/ "
+        pytest tests/performance/ -v
