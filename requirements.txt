@@ -1,3 +1,11 @@
+# Główna biblioteka
 opencv-python
-pytest
+
+# Przetwarzanie i generowanie dużych macierzy testowych
 numpy
+
+# Framework do testów funkcjonalnych
+pytest
+
+# Dodatek do wykonywania benchmarków i testów wydajnościowych
+pytest-benchmark
