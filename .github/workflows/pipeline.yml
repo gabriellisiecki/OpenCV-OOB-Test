@@ -41,4 +41,3 @@ jobs:
         if [ -d tests/performance ] && [ "$(ls -A tests/performance)" ]; then
           pytest tests/performance/ -v
         fi
-
