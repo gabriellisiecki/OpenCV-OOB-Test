@@ -23,11 +23,7 @@ jobs:
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
         pip install pytest opencv-python-headless
-        
-    - name: Check OpenCV Installation
-      run: |
-        python -c "import cv2; print(f'OpenCV module loaded successfully. Version: {cv2.__version__}')"
-        
+         
     - name: Run Functional Tests
       run: |
         echo "Running functional tests from tests/functional/"
