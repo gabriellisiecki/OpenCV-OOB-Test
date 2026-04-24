@@ -1,4 +1,4 @@
 import pytest
 
-def test_alawys_true():
+def test_always_true():
     assert True
