@@ -15,4 +15,19 @@ def test_benchmark_large_matrices():
     Test wydajności mierzący czas nakładania ciężkich filtrów (rozmycie, Canny)
     na obrazy w wysokich rozdzielczościach (4K, 8K).
     """
-    pass
+    resolutions = {
+        "4K": (3840, 2160),
+        "8K": (7680, 4320)
+    }
+
+    for name, (width, height) in resolutions.items():
+        image = generate_random_image(width, height)
+
+        # 1. Konwersja do skali szarości (
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        
+        # 2. Silne rozmycie Gaussa 
+        blurred = cv2.GaussianBlur(gray, (21, 21), 0)
+        
+        # 3. Ekstrakcja krawędzi
+        edges = cv2.Canny(blurred, 50, 150)
