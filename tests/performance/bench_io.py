@@ -3,6 +3,7 @@ import numpy as np
 import time
 import tempfile
 import os
+import json
 
 def test_benchmark_io():
     """
@@ -17,6 +18,8 @@ def test_benchmark_io():
     formats = [".png", ".tiff"]
     
     print("\n--- Rozpoczynam Benchmark I/O (100 obrazów 1920x1080) ---")
+    
+    results_data = {}
     
     # Użycie TemporaryDirectory zapewnia automatyczne "sprzątanie" plików po wyjściu z bloku with
     with tempfile.TemporaryDirectory() as temp_dir:
@@ -40,4 +43,15 @@ def test_benchmark_io():
             # Wypisanie sformatowanych wyników pomiaru
             print(f"{fmt.upper():<5} - Zapis: {write_duration:.2f}s | Odczyt: {read_duration:.2f}s")
             
+            results_data[fmt] = {
+                "write_s": round(write_duration, 3),
+                "read_s": round(read_duration, 3)
+            }
+            
     print("---------------------------------------------------------")
+
+    # Zapis wyników do pliku JSON, aby Paweł mógł je wykorzystać 
+    # w swoim raporcie CI/CD (Issue #24)
+    results_file = os.path.join(os.path.dirname(__file__), "results_io.json")
+    with open(results_file, "w") as f:
+        json.dump(results_data, f, indent=4)
