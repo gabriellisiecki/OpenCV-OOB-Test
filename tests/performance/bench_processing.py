@@ -12,16 +12,29 @@ def generate_random_image(width, height):
     """
     return np.random.randint(0, 256, (height, width, 3), dtype=np.uint8)
 
+def get_benchmark_resolutions():
+    """
+    Zwraca listę rozdzielczości do benchmarku.
+    Domyślnie uruchamiany jest tylko wariant 4K, aby test był lżejszy w CI.
+    Przypadek 8K można włączyć ustawiając BENCH_PROCESSING_INCLUDE_8K=1.
+    """
+    resolutions = {
+        "4K": (3840, 2160),
+    }
+
+    include_8k = os.getenv("BENCH_PROCESSING_INCLUDE_8K", "").strip().lower()
+    if include_8k in {"1", "true", "yes", "on"}:
+        resolutions["8K"] = (7680, 4320)
+
+    return resolutions
+
 def test_benchmark_large_matrices():
     """
     [PERF] Procesowanie dużych macierzy (Issue #12)
     Test wydajności mierzący czas nakładania ciężkich filtrów (rozmycie, Canny)
     na obrazy w wysokich rozdzielczościach (4K, 8K).
     """
-    resolutions = {
-        "4K": (3840, 2160),
-        "8K": (7680, 4320)
-    }
+    resolutions = get_benchmark_resolutions()
 
     print("\n--- Rozpoczynam Benchmark Procesowania Dużych Macierzy ---")
 
@@ -32,7 +45,7 @@ def test_benchmark_large_matrices():
 
         start_time = time.perf_counter()
 
-        # 1. Konwersja do skali szarości (
+        # 1. Konwersja do skali szarości
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         
         # 2. Silne rozmycie Gaussa 
@@ -43,6 +56,11 @@ def test_benchmark_large_matrices():
         
         end_time = time.perf_counter()
         duration = end_time - start_time
+        
+        # Weryfikacja (asercje)
+        assert edges.shape == gray.shape, "Błąd: Kształt obrazu wyjściowego nie zgadza się z wejściowym."
+        assert edges.dtype == np.uint8, "Błąd: Nieprawidłowy typ danych wyjściowych."
+        assert duration > 0, "Błąd: Czas wykonania nie może być ujemny lub zerowy."
         
         print(f"Rozdzielczość {name:<2} ({width}x{height}): {duration:.3f}s")
         results_data[name] = round(duration, 3)
