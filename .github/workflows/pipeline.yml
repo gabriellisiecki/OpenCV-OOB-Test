@@ -1,0 +1,39 @@
+name: OpenCV OOB Testing Pipeline
+
+on:
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  test_pipeline:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+        
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        pip install pytest opencv-python-headless
+         
+    - name: Run Functional Tests
+      run: |
+        echo "Running functional tests from tests/functional/"
+        if [ -d tests/functional ] && [ "$(ls -A tests/functional)" ]; then
+          pytest tests/functional/ -v
+        fi
+        
+    - name: Run Performance Tests
+      run: |
+        echo "Running performance tests from tests/performance/"
+        if [ -d tests/performance ] && [ "$(ls -A tests/performance)" ]; then
+          pytest tests/performance/ -v
+        fi
