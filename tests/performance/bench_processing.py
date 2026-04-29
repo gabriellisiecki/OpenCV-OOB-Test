@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+import time
 
 def generate_random_image(width, height):
     """
@@ -20,8 +21,12 @@ def test_benchmark_large_matrices():
         "8K": (7680, 4320)
     }
 
+    print("\n--- Rozpoczynam Benchmark Procesowania Dużych Macierzy ---")
+
     for name, (width, height) in resolutions.items():
         image = generate_random_image(width, height)
+
+        start_time = time.perf_counter()
 
         # 1. Konwersja do skali szarości (
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -31,3 +36,10 @@ def test_benchmark_large_matrices():
         
         # 3. Ekstrakcja krawędzi
         edges = cv2.Canny(blurred, 50, 150)
+        
+        end_time = time.perf_counter()
+        duration = end_time - start_time
+        
+        print(f"Rozdzielczość {name:<2} ({width}x{height}): {duration:.3f}s")
+        
+    print("----------------------------------------------------------")
