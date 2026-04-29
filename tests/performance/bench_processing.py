@@ -1,6 +1,8 @@
 import cv2
 import numpy as np
 import time
+import json
+import os
 
 def generate_random_image(width, height):
     """
@@ -23,6 +25,8 @@ def test_benchmark_large_matrices():
 
     print("\n--- Rozpoczynam Benchmark Procesowania Dużych Macierzy ---")
 
+    results_data = {}
+
     for name, (width, height) in resolutions.items():
         image = generate_random_image(width, height)
 
@@ -41,5 +45,12 @@ def test_benchmark_large_matrices():
         duration = end_time - start_time
         
         print(f"Rozdzielczość {name:<2} ({width}x{height}): {duration:.3f}s")
+        results_data[name] = round(duration, 3)
         
     print("----------------------------------------------------------")
+    
+    # Zapis wyników do pliku JSON, aby Paweł mógł je wykorzystać 
+    # w swoim raporcie CI/CD (Issue #24)
+    results_file = os.path.join(os.path.dirname(__file__), "results_processing.json")
+    with open(results_file, "w") as f:
+        json.dump(results_data, f, indent=4)
