@@ -13,18 +13,22 @@ Celem projektu jest przetestowanie najnowszej stabilnej wersji modułu `opencv-p
 OpenCV-OOB-Test/
 ├── .github/
 │   └── workflows/
-│       └── pipeline.yml       # Konfiguracja GitHub Actions Pipeline
+│       └── pipeline.yml              # Konfiguracja GitHub Actions Pipeline
 ├── tests/
-│   ├── functional/            # Skrypty testów funkcjonalnych
-│   │   ├── test_format_io.py  # (Przykład) Test wczytywania/zapisu obrazów
-│   │   └── ...
-│   ├── performance/           # Skrypty testów wydajnościowych 
-│   │   ├── bench_filters.py   # (Przykład) Benchmark nakładania filtrów
-│   │   └── ...
-│   └── data/                  # Próbki danych testowych (np. małe obrazki JPG/PNG do testów)
-├── docs/                      # Dokumentacja projektu
-├── requirements.txt           # Zależności projektu 
-└── README.md                  # Główny plik informacyjny / spis treści
+│   ├── functional/                   # Testy funkcjonalne
+│   │   ├── test_format_io.py         # Wczytywanie i zapis obrazow (I/O)
+│   │   ├── test_blurring.py          # Filtrowanie: GaussianBlur, medianBlur
+│   │   ├── test_color_conversion.py  # Konwersja przestrzeni barw (BGR->GRAY)
+│   │   └── test_canny_edge.py        # Detekcja krawedzi (Canny)
+│   ├── performance/                  # Testy wydajnosciowe
+│   │   ├── test_bench_io.py          # Benchmark I/O (zapis/odczyt 100 obrazow)
+│   │   └── test_bench_processing.py  # Benchmark procesowania macierzy 4K/8K
+│   └── data/                         # Dane testowe
+├── docs/                             # Dokumentacja projektu
+│   ├── test_scenarios.md             # Scenariusze testow akceptacyjnych
+│   └── commit_rules.md               # Zasady commitowania
+├── requirements.txt                  # Zaleznosci projektu
+└── README.md                         # Glowny plik informacyjny
 ```
 
 ## Kanały komunikacji
