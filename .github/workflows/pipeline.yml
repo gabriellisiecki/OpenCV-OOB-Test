@@ -31,3 +31,12 @@ jobs:
     - name: Run Performance Tests
       run: |
         pytest tests/performance/ -v -s --junitxml=reports/performance.xml
+
+    - name: Upload test reports
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-reports
+        path: |
+          reports/
+          tests/performance/results_*.json
