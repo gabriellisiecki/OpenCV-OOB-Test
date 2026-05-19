@@ -31,10 +31,18 @@ OpenCV-OOB-Test/
 └── README.md                         # Glowny plik informacyjny
 ```
 
-## Kanały komunikacji
+## Kanaly komunikacji
 
-- **Bieżąca komunikacja:** - Kanał komunikacyjny (Discord): `https://discord.gg/qwk5zNNku4`
-- **Zarządzanie zadaniami i kodem:** GitHub (Issues, Pull Requesty, Code Review).
+- **Serwer Discord zespolu:** [https://discord.gg/qwk5zNNku4](https://discord.gg/qwk5zNNku4)
+- **Zarzadzanie zadaniami i kodem:** GitHub (Issues, Pull Requesty, Code Review)
+
+### Kontakt do czlonkow zespolu
+
+| Czlonek | Rola | GitHub | Discord |
+|---------|------|--------|---------|
+| Gabriel Lisiecki | Tech Lead / DevOps | [@gabriellisiecki](https://github.com/gabriellisiecki) | `butter4222` |
+| Adrian Markowski | Functional QA | [@markowskiadrian](https://github.com/markowskiadrian) | `22adi` |
+| Pawel Nawrocki | QA / Docs | [@pawnaww](https://github.com/pawnaww) | `pawnaww` |
 
 ## Harmonogram projektowy
 
