@@ -70,24 +70,12 @@ jobs:
           echo "**Procesowanie duzych macierzy:**" >> $GITHUB_STEP_SUMMARY
           echo "| Rozdzielczosc | Czas [s] |" >> $GITHUB_STEP_SUMMARY
           echo "|---------------|----------|" >> $GITHUB_STEP_SUMMARY
-          python3 << 'EOF' >> $GITHUB_STEP_SUMMARY
-import json
-with open("tests/performance/results_processing.json") as f:
-    data = json.load(f)
-for k, v in data.items():
-    print(f"| {k} | {v} |")
-EOF
+          python3 -c 'import json; [print(f"| {k} | {v} |") for k,v in json.load(open("tests/performance/results_processing.json")).items()]' >> $GITHUB_STEP_SUMMARY
         fi
         echo "" >> $GITHUB_STEP_SUMMARY
         if [ -f tests/performance/results_io.json ]; then
           echo "**Benchmark I/O (100 obrazow 1920x1080):**" >> $GITHUB_STEP_SUMMARY
           echo "| Format | Zapis [s] | Odczyt [s] |" >> $GITHUB_STEP_SUMMARY
           echo "|--------|-----------|------------|" >> $GITHUB_STEP_SUMMARY
-          python3 << 'EOF' >> $GITHUB_STEP_SUMMARY
-import json
-with open("tests/performance/results_io.json") as f:
-    data = json.load(f)
-for k, v in data.items():
-    print(f"| {k} | {v['write_s']} | {v['read_s']} |")
-EOF
+          python3 -c 'import json; [print("| {} | {} | {} |".format(k, v["write_s"], v["read_s"])) for k,v in json.load(open("tests/performance/results_io.json")).items()]' >> $GITHUB_STEP_SUMMARY
         fi
