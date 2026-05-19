@@ -45,7 +45,6 @@ jobs:
     - name: Build opencv-python from source
       run: |
         cd /tmp/opencv-python
-        export CMAKE_ARGS="-DBUILD_LIST=core,imgproc,imgcodecs"
         pip install . --verbose
       env:
         ENABLE_HEADLESS: 1
