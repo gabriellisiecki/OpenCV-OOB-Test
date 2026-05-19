@@ -35,8 +35,11 @@ jobs:
       run: |
         git clone --recursive https://github.com/opencv/opencv-python.git /tmp/opencv-python
         cd /tmp/opencv-python
-        git checkout ${{ github.event.inputs.opencv_commit }}
-        git submodule update --init --recursive
+        COMMIT="${{ github.event.inputs.opencv_commit }}"
+        if [ "$COMMIT" != "HEAD" ]; then
+          git checkout "$COMMIT"
+          git submodule update --init --recursive
+        fi
         echo "Building opencv-python from commit: $(git rev-parse HEAD)"
 
     - name: Build opencv-python from source
