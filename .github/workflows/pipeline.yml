@@ -63,17 +63,29 @@ jobs:
         echo "" >> $GITHUB_STEP_SUMMARY
 
         echo "### Testy wydajnosciowe" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
         if [ -f tests/performance/results_processing.json ]; then
           echo "**Procesowanie duzych macierzy:**" >> $GITHUB_STEP_SUMMARY
-          echo '```' >> $GITHUB_STEP_SUMMARY
-          cat tests/performance/results_processing.json >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo '```' >> $GITHUB_STEP_SUMMARY
+          echo "| Rozdzielczosc | Czas [s] |" >> $GITHUB_STEP_SUMMARY
+          echo "|---------------|----------|" >> $GITHUB_STEP_SUMMARY
+          python3 -c "
+import json
+with open('tests/performance/results_processing.json') as f:
+    data = json.load(f)
+for k, v in data.items():
+    print(f'| {k} | {v} |')
+" >> $GITHUB_STEP_SUMMARY
         fi
+        echo "" >> $GITHUB_STEP_SUMMARY
         if [ -f tests/performance/results_io.json ]; then
-          echo "**Benchmark I/O:**" >> $GITHUB_STEP_SUMMARY
-          echo '```' >> $GITHUB_STEP_SUMMARY
-          cat tests/performance/results_io.json >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo '```' >> $GITHUB_STEP_SUMMARY
+          echo "**Benchmark I/O (100 obrazow 1920x1080):**" >> $GITHUB_STEP_SUMMARY
+          echo "| Format | Zapis [s] | Odczyt [s] |" >> $GITHUB_STEP_SUMMARY
+          echo "|--------|-----------|------------|" >> $GITHUB_STEP_SUMMARY
+          python3 -c "
+import json
+with open('tests/performance/results_io.json') as f:
+    data = json.load(f)
+for fmt, times in data.items():
+    print(f'| {fmt} | {times[\"write_s\"]} | {times[\"read_s\"]} |')
+" >> $GITHUB_STEP_SUMMARY
         fi
