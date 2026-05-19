@@ -54,7 +54,32 @@ Projekt trwa 2,5 miesiąca. Cele do zrealizowania w kolejnych etapach:
 
 Dokładny harmonogram jest dostępny w widoku kalendarzowym w [GitHub Projects](https://github.com/users/gabriellisiecki/projects/3).
 
-## Zasady i Zarządzanie Kodem (Code Review & Branches)
-Dokładny opis zasad i zarządzania kodem jest dostępny w pliku [commit_rules.md](docs/commit_rules.md).
+## Zasady i Zarzadzanie Kodem (Code Review & Branches)
+Dokladny opis zasad i zarzadzania kodem jest dostepny w pliku [commit_rules.md](docs/commit_rules.md).
 
+## Strategia testowa
 
+Projekt testuje modul `opencv-python` w podejsciu OOB (Out Of the Box) - weryfikujemy zachowanie biblioteki w typowych scenariuszach uzycia, bez modyfikacji jej kodu zrodlowego.
+
+### Testy funkcjonalne (4 testy)
+Sprawdzaja poprawnosc dzialania kluczowych funkcji OpenCV:
+- **I/O** - zapis i odczyt obrazow w roznych formatach (JPG, PNG)
+- **Filtrowanie** - rozmycie Gaussa i medianowe, weryfikacja modyfikacji obrazu
+- **Konwersja kolorow** - zmiana przestrzeni barw BGR na skale szarosci
+- **Detekcja krawedzi** - algorytm Canny, weryfikacja binarnosci wyniku
+
+### Testy wydajnosciowe (2 testy)
+Mierza czas wykonania operacji na duzych danych:
+- **Benchmark I/O** - zapis i odczyt 100 obrazow Full HD w formatach PNG i TIFF
+- **Benchmark procesowania** - filtrowanie i detekcja krawedzi na macierzach 4K/8K
+
+### Pipeline CI/CD
+Pipeline uruchamiana jest automatycznie przy Pull Requestach do `main` oraz mozna ja odpalic recznie (`workflow_dispatch`). Pipeline:
+- Instaluje `opencv-python-headless` z PyPI
+- Uruchamia testy funkcjonalne i wydajnosciowe przez `pytest`
+- Generuje raporty JUnit XML
+- Uploaduje artefakty (raporty XML + wyniki JSON z benchmarkow)
+- Wyswietla czytelne podsumowanie wynikow na stronie workflow run
+
+### Scenariusze testow akceptacyjnych
+Dokumentacja scenariuszy dostepna w pliku [test_scenarios.md](docs/test_scenarios.md).
