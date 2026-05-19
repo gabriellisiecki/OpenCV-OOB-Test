@@ -40,3 +40,40 @@ jobs:
         path: |
           reports/
           tests/performance/results_*.json
+
+    - name: Generate test summary
+      if: always()
+      run: |
+        echo "## Wyniki testow OpenCV OOB" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+
+        echo "### Testy funkcjonalne" >> $GITHUB_STEP_SUMMARY
+        if [ -f reports/functional.xml ]; then
+          TOTAL=$(grep -oP 'tests="\K[0-9]+' reports/functional.xml | head -1)
+          FAIL=$(grep -oP 'failures="\K[0-9]+' reports/functional.xml | head -1)
+          ERR=$(grep -oP 'errors="\K[0-9]+' reports/functional.xml | head -1)
+          PASS=$((TOTAL - FAIL - ERR))
+          echo "| Metryka | Wartosc |" >> $GITHUB_STEP_SUMMARY
+          echo "|---------|---------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Lacznie | $TOTAL |" >> $GITHUB_STEP_SUMMARY
+          echo "| Zaliczone | $PASS |" >> $GITHUB_STEP_SUMMARY
+          echo "| Niezaliczone | $FAIL |" >> $GITHUB_STEP_SUMMARY
+          echo "| Bledy | $ERR |" >> $GITHUB_STEP_SUMMARY
+        fi
+        echo "" >> $GITHUB_STEP_SUMMARY
+
+        echo "### Testy wydajnosciowe" >> $GITHUB_STEP_SUMMARY
+        if [ -f tests/performance/results_processing.json ]; then
+          echo "**Procesowanie duzych macierzy:**" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          cat tests/performance/results_processing.json >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+        fi
+        if [ -f tests/performance/results_io.json ]; then
+          echo "**Benchmark I/O:**" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          cat tests/performance/results_io.json >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+        fi
